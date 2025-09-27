@@ -17,7 +17,7 @@ public class Main {
         // Controllers
         RaceController raceController = new RaceController();
         ResultController resultController = new ResultController();
-
+//Test Github working
         // Views
         PaymentView paymentView = new PaymentView(raceController);
         ResultView resultView = new ResultView(resultController);
