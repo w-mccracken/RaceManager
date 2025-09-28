@@ -21,11 +21,14 @@ public class RaceController {
     // For per-race events, you’d manage a map<RaceId, RaceNotifications>
     private final RaceNotifications raceNotifications = new RaceNotifications();
 
-    private final RaceSystem raceSystem = new RaceSystem();
+    //private final RaceSystem raceSystem = new RaceSystem();
+    private final RaceSystem raceSystem;
     private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-    public RaceController() {
+    public RaceController(RaceSystem raceSystem) {
         sdf.setLenient(false);
+        this.raceSystem=raceSystem;
+
     }
 
 
