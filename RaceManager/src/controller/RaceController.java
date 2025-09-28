@@ -1,9 +1,18 @@
 package controller;
 
 import model.Race;
+import model.RaceSystem;
 import model.Racer;
 import model.payment.*;
 import model.notification.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+
+
 
 public class RaceController {
 
@@ -11,6 +20,15 @@ public class RaceController {
     private final NotificationCenter notificationCenter = new NotificationCenter();
     // For per-race events, you’d manage a map<RaceId, RaceNotifications>
     private final RaceNotifications raceNotifications = new RaceNotifications();
+
+    private final RaceSystem raceSystem = new RaceSystem();
+    private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+    public RaceController() {
+        sdf.setLenient(false);
+    }
+
+
 
     public void handleBrowseRaces() { }
 
@@ -40,5 +58,56 @@ public class RaceController {
     // exposure for wiring subscribers (e.g., from View)
     public NotificationCenter getNotificationCenter() { return notificationCenter; }
     public RaceNotifications getRaceNotifications() { return raceNotifications; }
+
+    //******************
+    //private final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+    public boolean handleCreateRace(String dateStr, String type, String milesStr, String route,
+                                    String officialStr, String limitStr, String lastRegStr, String catStr) {
+        try {
+            Date raceDate = sdf.parse(dateStr);
+            if (raceDate.before(new Date())) {
+                System.out.println("ERROR: Race date must be in the future.");
+                return false;
+            }
+            double miles = Double.parseDouble(milesStr);
+            if (miles <= 0) {
+                System.out.println("ERROR: Miles must be greater than 0.");
+                return false;
+            }
+            int limit = Integer.parseInt(limitStr);
+            if (limit <= 0) {
+                System.out.println("ERROR: Participant limit must be greater than 0.");
+                return false;
+            }
+            Date lastRegDate = sdf.parse(lastRegStr);
+            if (lastRegDate.after(raceDate)) {
+                System.out.println("ERROR: Last registration date must be before race date.");
+                return false;
+            }
+            int catRequired = Integer.parseInt(catStr);
+            if (catRequired < 1 || catRequired > 5) {
+                System.out.println("ERROR: Category must be between 1 and 5.");
+                return false;
+            }
+            boolean official = Boolean.parseBoolean(officialStr);
+
+            Race race = raceSystem.createRace(raceDate, type, miles, route,
+                    official, limit, lastRegDate, catRequired);
+            System.out.println("SUCCESS: " + race);
+            return true;
+
+        } catch (ParseException e) {
+            System.out.println("ERROR: Invalid date format. Use MM/dd/yyyy.");
+            return false;
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR: Invalid number format.");
+            return false;
+        }
+    }
+    //******************
+
+
+
 }
 

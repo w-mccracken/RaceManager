@@ -14,15 +14,35 @@ public class Race {
     private Date lastRegistrationDate;
     private int catRequired;
     private List<RaceReview> reviews;
+    private static int counterRace = 1;
 
     public Race() {}
     public Race(String raceID) { this.raceID = raceID; }
 
-    @Override
-    public String toString() { return "Race#" + raceID; }
-
-    // getters/setters (only what we need here)
     public String getRaceID() { return raceID; }
-    public void setRaceID(String raceID) { this.raceID = raceID; }
+    public void setRaceDate(Date raceDate) { this.raceDate = raceDate; }
+    public void setType(String type) { this.type = type; }
+    public void setMiles(double miles) { this.miles = miles; }
+    public void setRoute(String route) { this.route = route; }
+    public void setOfficialRace(boolean officialRace) { this.officialRace = officialRace; }
+    public void setParticipantLimit(int participantLimit) { this.participantLimit = participantLimit; }
+    public void setLastRegistrationDate(Date lastRegistrationDate) { this.lastRegistrationDate = lastRegistrationDate; }
+    public void setCatRequired(int catRequired) { this.catRequired = catRequired; }
+
+    @Override
+    public String toString() {
+        return "Race{" +
+                "id='" + raceID + '\'' +
+                ", date=" + raceDate +
+                ", type='" + type + '\'' +
+                ", miles=" + miles +
+                ", route='" + route + '\'' +
+                ", official=" + officialRace +
+                ", limit=" + participantLimit +
+                ", lastRegistrationDate=" + lastRegistrationDate +
+                ", catRequired=" + catRequired +
+                '}';
+    }
+
 }
 
