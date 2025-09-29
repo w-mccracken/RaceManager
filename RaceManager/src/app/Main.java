@@ -21,32 +21,35 @@ public class Main {
     public static void main(String[] args) {
 
 
+        fakeLoginDemo();
         // Instantiate the RaceSystem
         RaceSystem raceSystem = new RaceSystem();
 
         // Instantiate controllers
-        //UserController userController = new UserController(raceSystem);
+        UserController userController = new UserController(raceSystem);
         RaceController raceController = new RaceController(raceSystem);
         //ResultController resultController = new ResultController(raceSystem);
         //ReviewController reviewController = new ReviewController(raceSystem);
+        RacerController racerController=new RacerController(raceSystem);
 
         // Instantiate views
-        //UserView userView = new UserView(userController, raceController);
-        RaceView raceView = new RaceView(raceController);
+        UserView userView = new UserView(userController);
+        RaceView raceView = new RaceView(raceController, raceSystem);
         //ResultView resultView = new ResultView(resultController);
         //ReviewView reviewView = new ReviewView(reviewController);
+        RacerView racerView=new RacerView(racerController);
 
         // Show login form first
-        //userView.displayLoginForm();
+        userView.displayLoginForm();
 
         // Show main menu
-        UserController userController=new UserController();
-        UserView userView=new UserView(userController);
+        //UserController userController=new UserController();
+        //UserView userView=new UserView(userController);
         ResultController resultController=new ResultController();
         ResultView resultView=new ResultView(resultController);
         ReviewController reviewController=new ReviewController();
         ReviewView reviewView=new ReviewView(reviewController);
-        MainMenuView mainMenuView = new MainMenuView(userView, raceView, resultView, reviewView);
+        MainMenuView mainMenuView = new MainMenuView(userView, raceView, resultView, reviewView, racerView);
         mainMenuView.showMenu();
 
 
@@ -72,7 +75,7 @@ public class Main {
                   option = sc.nextInt();
                   sc.nextLine(); // clear buffer
 
-                  switch(option) {
+                  switch(option) {1
                       case 1 -> raceView.promptCreateRace();
                       case 2 -> System.out.println("Create Racer not implemented yet.");
                       case 3 -> System.out.println("Exiting...");
@@ -83,5 +86,17 @@ public class Main {
 
               //************************************
        */
+    }
+
+    private static void fakeLoginDemo() {
+
+
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Login (any email): ");
+    String email = sc.nextLine().trim();
+    System.out.print("Password: ");
+    String password = sc.nextLine().trim();
+
+
     }
 }

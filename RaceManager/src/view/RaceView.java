@@ -2,6 +2,7 @@ package view;
 
 import controller.RaceController;
 import model.Race;
+import model.RaceSystem;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,8 +10,10 @@ import java.util.Scanner;
 
 public class RaceView {
     private final RaceController controller;
+    private final RaceSystem raceSystem;
 
-    public RaceView(RaceController controller) { this.controller = controller; }
+    public RaceView(RaceController controller, RaceSystem raceSystem) { this.controller = controller;
+    this.raceSystem=raceSystem;}
 
     public void displayRaceList(List<Race> races) { }
     public void displayRaceDetails(Race race) { }
@@ -46,6 +49,25 @@ public class RaceView {
 
         controller.handleCreateRace(date, type, miles, route, official, limit, lastReg, cat);
     }
+
+
+    /**
+     * Display all available races from RaceSystem
+     */
+    public void displayRaceList() {
+        List<Race> races = raceSystem.getAllRaces();
+
+        System.out.println("\n=== Available Races ===");
+        if (races.isEmpty()) {
+            System.out.println("No races available.");
+            return;
+        }
+
+        for (Race r : races) {
+            System.out.println("- " + r);
+        }
+    }
+
 
     //**************************
 
